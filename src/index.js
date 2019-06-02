@@ -40,6 +40,11 @@ function bindEventListeners() {
     ele.addEventListener('click', onClickBlock);
   }
 }
+
+function rebuildBoard() {
+  const board = document.createElement('div');
+  // board.
+}
 function onClickBlock(e) {
   console.log('i clicked on:', e.target.id);
   const blockId = e.target.id;
@@ -64,19 +69,44 @@ function onClickBlock(e) {
       console.log('?', won);
       if (won) {
         console.log(currentSymbol, 'WON THE GAME!');
+        renderModal(currentSymbol + ' player won the game!');
         resetGame();
         // end game
         return;
       }
     }
-    if (turnCount > 9) {
+    if (turnCount === 9) {
       console.log('TIE!');
+      renderModal('Tie!');
       resetGame();
       // end game
     }
   } else {
     console.log('Already selected!');
   }
+}
+
+function renderModal(currentSymbol) {
+  const anchorModalElement = document.getElementById('modal-anchor');
+  const modalContentElement = createModalContentElement(currentSymbol);
+  const modalBackgroundElement = createModelBackgroundElement(
+    modalContentElement
+  );
+  anchorModalElement.append(modalBackgroundElement);
+}
+
+function createModelBackgroundElement(modalContentElement) {
+  const modalElement = document.createElement('div');
+  modalElement.className = 'modal-background';
+  modalElement.append(modalContentElement);
+  return modalElement;
+}
+
+function createModalContentElement(displayMessage) {
+  const modalContentElement = document.createElement('div');
+  modalContentElement.className = 'modal-content';
+  modalContentElement.innerHTML = displayMessage;
+  return modalContentElement;
 }
 
 function evaluateSymbol() {
@@ -136,10 +166,26 @@ function determineRowOrColumnWin(currentSymbol) {
       return true;
     }
   }
-}
-
-function determineDiagonalWin() {
-  const condition1 = ['0,0', '1,1', '2,2'];
-  const condition2 = [];
   return false;
 }
+
+function determineDiagonalWin(currentSymbol) {
+  const condition1 = ['0,0', '1,1', '2,2'];
+  const condition2 = ['0,2', '1,1', '2,0'];
+  const meets1 = checkIncludes(currentSymbol, condition1);
+  const meets2 = checkIncludes(currentSymbol, condition2);
+  return meets1 || meets2;
+}
+
+function checkIncludes(currentSymbol, conditions) {
+  for (let i = 0; i < conditions.length; i++) {
+    let rowToCheck = gameRecord[currentSymbol].row[i];
+    let pair = conditions[i];
+    if (!rowToCheck.includes(pair)) {
+      return false;
+    }
+  }
+  return true;
+}
+
+function renderEndGameModal() {}
