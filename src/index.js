@@ -17,7 +17,9 @@ function resetGame() {
   gameRecord = new GameRecord();
   turnCount = 0;
   cacheCoordinate = [];
-  // rebuild the board
+  rebuildBoard();
+  removeModal();
+  bindEventListeners();
 }
 
 function GameRecord() {
@@ -42,8 +44,29 @@ function bindEventListeners() {
 }
 
 function rebuildBoard() {
+  const newBoard = buildBoard();
+  const boardAnchor = document.getElementById('board-anchor');
+  const oldBoard = document.getElementById('board');
+  oldBoard.remove();
+  console.log(boardAnchor, newBoard)
+  boardAnchor.appendChild(newBoard);
+}
+
+function buildBoard() {
   const board = document.createElement('div');
-  // board.
+  board.id = 'board';
+  for (let i = 0; i < 3; i++) {
+    let row = document.createElement('div');
+    row.className = `row row-${i}`;
+    for (let j = 0; j < 3; j++) {
+      let col = document.createElement('div');
+      col.className = `col col-${j}`;
+      col.id = `${i},${j}`;
+      row.appendChild(col);
+    }
+    board.appendChild(row);
+  };
+  return board;
 }
 function onClickBlock(e) {
   console.log('i clicked on:', e.target.id);
@@ -70,7 +93,7 @@ function onClickBlock(e) {
       if (won) {
         console.log(currentSymbol, 'WON THE GAME!');
         renderModal(currentSymbol + ' player won the game!');
-        resetGame();
+        // resetGame();
         // end game
         return;
       }
@@ -78,7 +101,7 @@ function onClickBlock(e) {
     if (turnCount === 9) {
       console.log('TIE!');
       renderModal('Tie!');
-      resetGame();
+      // resetGame();
       // end game
     }
   } else {
@@ -95,9 +118,15 @@ function renderModal(currentSymbol) {
   anchorModalElement.append(modalBackgroundElement);
 }
 
+function removeModal() {
+  const modalBackgroundElement = document.getElementById('modal');
+  modalBackgroundElement.remove();
+}
+
 function createModelBackgroundElement(modalContentElement) {
   const modalElement = document.createElement('div');
   modalElement.className = 'modal-background';
+  modalElement.id = 'modal';
   modalElement.append(modalContentElement);
   return modalElement;
 }
@@ -106,7 +135,18 @@ function createModalContentElement(displayMessage) {
   const modalContentElement = document.createElement('div');
   modalContentElement.className = 'modal-content';
   modalContentElement.innerHTML = displayMessage;
+  const resetButton = createResetButton();
+  modalContentElement.appendChild(resetButton);
   return modalContentElement;
+}
+
+function createResetButton() {
+  const resetButton = document.createElement('button');
+  resetButton.innerHTML = "Reset Board";
+  resetButton.className = "button reset-button";
+  // resetButton.removeEventListener('click');
+  resetButton.addEventListener('click', resetGame);
+  return resetButton;
 }
 
 function evaluateSymbol() {
@@ -151,10 +191,6 @@ function determineResult(currentSymbol, blockId) {
   } else {
     return false;
   }
-  // if anything found, return true right away
-  // determine diagonal win
-  // if anything found, return true right away
-  // if reach here, means false;
 }
 
 function determineRowOrColumnWin(currentSymbol) {
@@ -187,5 +223,3 @@ function checkIncludes(currentSymbol, conditions) {
   }
   return true;
 }
-
-function renderEndGameModal() {}
