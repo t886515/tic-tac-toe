@@ -10,17 +10,22 @@
 }
 .col {
   display: flex;
+  align-items: center;
+  justify-content: center;
   border: 1px solid black;
   width: 100px;
   height: 100px;
+  font-family: 'Helvetica';
 }
 
 .O {
-  font-size: 24px;
+  font-size: 36px;
+  color: green;
 }
 
 .X {
-  font-size: 24px;
+  font-size: 36px;
+  color: red;
 }
 
 .modal-background {
