@@ -6,8 +6,6 @@ let cacheCoordinate = [];
 
 let turnCount = 0;
 let gameRecord = new GameRecord();
-// let currentSymbol;
-// let currentId;
 
 function main() {
   bindEventListeners();
@@ -48,7 +46,6 @@ function rebuildBoard() {
   const boardAnchor = document.getElementById('board-anchor');
   const oldBoard = document.getElementById('board');
   oldBoard.remove();
-  console.log(boardAnchor, newBoard)
   boardAnchor.appendChild(newBoard);
 }
 
@@ -62,15 +59,30 @@ function buildBoard() {
       let col = document.createElement('div');
       col.className = `col col-${j}`;
       col.id = `${i},${j}`;
+      let flipCardWrapper = createFlippingCards();
+      col.appendChild(flipCardWrapper);
       row.appendChild(col);
     }
     board.appendChild(row);
   };
   return board;
 }
+
+function createFlippingCards() {
+  const flipCardWrapper = document.createElement('div');
+  flipCardWrapper.className = "flip-card-wrapper";
+  const flipCardFront = document.createElement('div');
+  flipCardFront.className = "flip-card-front";
+  const flipCardBack = document.createElement('div');
+  flipCardBack.className = "flip-card-back";
+  flipCardWrapper.appendChild(flipCardFront);
+  flipCardWrapper.appendChild(flipCardBack);
+  return flipCardWrapper;
+}
+
 function onClickBlock(e) {
-  console.log('i clicked on:', e.target.id);
-  const blockId = e.target.id;
+  console.log('i clicked on:', e.currentTarget.id);
+  const blockId = e.currentTarget.id;
   // if can't find in cache value
   if (!cacheCoordinate.includes(blockId)) {
     // push to cache value
@@ -79,84 +91,88 @@ function onClickBlock(e) {
     // evaluate symbol to put
     const currentSymbol = evaluateSymbol();
 
-    // update dom to 1 create symbol ele 2 append to dom
     updateDOM(currentSymbol, blockId);
-    //
-    // update game record
     updateGameRecord(currentSymbol, blockId);
 
     // if counter > 4;
     // determine win or tie from game record
     if (turnCount > 4) {
       const won = determineResult(currentSymbol, blockId);
-      console.log('?', won);
       if (won) {
-        console.log(currentSymbol, 'WON THE GAME!');
         renderModal(currentSymbol + ' player won the game!');
-        // resetGame();
-        // end game
         return;
       }
     }
     if (turnCount === 9) {
-      console.log('TIE!');
       renderModal('Tie!');
-      // resetGame();
-      // end game
     }
   } else {
     console.log('Already selected!');
   }
 }
 
-function renderModal(currentSymbol) {
-  const anchorModalElement = document.getElementById('modal-anchor');
-  const modalContentElement = createModalContentElement(currentSymbol);
-  const modalBackgroundElement = createModelBackgroundElement(
-    modalContentElement
-  );
-  anchorModalElement.append(modalBackgroundElement);
+/** ======================== */
+/** END GAME: Modal handling */
+
+function renderModal(message) {
+  // grab modal-message div and add the message
+  // const modalAnchor = document.getElementById('modal-anchor');
+  const modalBackground = document.getElementById('modal-background');
+  // modalAnchor.className = "";
+  modalBackground.classList.remove("u--hide");
 }
 
-function removeModal() {
-  const modalBackgroundElement = document.getElementById('modal');
-  modalBackgroundElement.remove();
-}
+// function renderModal(currentSymbol) {
+//   const anchorModalElement = document.getElementById('modal-anchor');
+//   const modalContentElement = createModalContentWrapperElement(currentSymbol);
+//   const modalBackgroundElement = createModelBackgroundElement(
+//     modalContentElement
+//   );
+//   anchorModalElement.append(modalBackgroundElement);
+// }
 
-function createModelBackgroundElement(modalContentElement) {
-  const modalElement = document.createElement('div');
-  modalElement.className = 'modal-background';
-  modalElement.id = 'modal';
-  modalElement.append(modalContentElement);
-  return modalElement;
-}
+// function removeModal() {
+//   const modalBackgroundElement = document.getElementById('modal');
+//   modalBackgroundElement.remove();
+// }
 
-function createModalContentElement(displayMessage) {
-  const modalContentElement = document.createElement('div');
-  modalContentElement.className = 'modal-content';
-  modalContentElement.innerHTML = displayMessage;
-  const resetButton = createResetButton();
-  modalContentElement.appendChild(resetButton);
-  return modalContentElement;
-}
+// function createModelBackgroundElement(modalContentElement) {
+//   const modalElement = document.createElement('div');
+//   modalElement.className = 'modal-background';
+//   modalElement.id = 'modal';
+//   modalElement.append(modalContentElement);
+//   return modalElement;
+// }
 
-function createResetButton() {
-  const resetButton = document.createElement('button');
-  resetButton.innerHTML = "Reset Board";
-  resetButton.className = "button reset-button";
-  // resetButton.removeEventListener('click');
-  resetButton.addEventListener('click', resetGame);
-  return resetButton;
-}
+// function createModalContentWrapperElement(displayMessage) {
+//   const modalOverlay = document.createElement('div');
+//   modalOverlay.className = 'modal-overlay';
+//   const modalContent = document.createElement('div');
 
-function evaluateSymbol() {
-  turnCount++;
-  return turnCount % 2 === 1 ? 'O' : 'X';
-}
+//   // modalOverlay.innerHTML = displayMessage;
+//   const resetButton = createResetButton();
+//   modalOverlay.appendChild(resetButton);
+//   return modalOverlay;
+// }
 
+// function createResetButton() {
+//   const resetButton = document.createElement('button');
+//   resetButton.innerHTML = "Reset Board";
+//   resetButton.className = "button reset-button";
+//   // resetButton.removeEventListener('click');
+//   resetButton.addEventListener('click', resetGame);
+//   return resetButton;
+// }
+
+/** END GAME: Modal handling */
+/** ======================== */
+
+/** ====================== */
+/** IN GAME: card handling */
 function updateDOM(currentSymbol, blockId) {
-  const symbolElement = createSymbolElement(currentSymbol);
-  appendSymbol(symbolElement, blockId);
+  const block = document.getElementById(blockId);
+  appendSymbolToCard(block, currentSymbol);
+  updateInnerCardStatus(block);
 }
 
 function createSymbolElement(currentSymbol) {
@@ -165,11 +181,22 @@ function createSymbolElement(currentSymbol) {
   symbolElement.className = currentSymbol;
   return symbolElement;
 }
-
-function appendSymbol(symbolElement, blockId) {
-  const block = document.getElementById(blockId);
-  block.appendChild(symbolElement);
+function updateInnerCardStatus(block) {
+  const cardWrapper = block.querySelector(".flip-card-wrapper");
+  cardWrapper.classList.add("flip-card-wrapper--clicked");
+};
+function appendSymbolToCard(block, currentSymbol) {
+  const symbolElement = createSymbolElement(currentSymbol);
+  const cardBack = block.querySelector(".flip-card-back");
+  cardBack.appendChild(symbolElement);
 }
+
+
+/** IN GAME: card handling */
+/** ====================== */
+
+/** =================== */
+/** IN GAME: game logic */
 
 function updateGameRecord(currentSymbol, blockId) {
   const splitId = blockId.split(',');
@@ -179,6 +206,10 @@ function updateGameRecord(currentSymbol, blockId) {
   gameRecord[currentSymbol].col[y].push(blockId);
 
   console.log(gameRecord);
+}
+function evaluateSymbol() {
+  turnCount++;
+  return turnCount % 2 === 1 ? 'O' : 'X';
 }
 
 function determineResult(currentSymbol, blockId) {
@@ -223,3 +254,6 @@ function checkIncludes(currentSymbol, conditions) {
   }
   return true;
 }
+
+/** IN GAME: game logic */
+/** =================== */
