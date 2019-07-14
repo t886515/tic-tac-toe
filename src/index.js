@@ -126,20 +126,16 @@ function updateModalMessage(message) {
 
 function renderModal() {
   const modalOverlay = document.getElementById('modal-overlay');
-  const modalContent = document.getElementById('modal-content');
   const modalBackground = document.getElementById('modal-background');
   modalOverlay.classList.add("modal-show");
   modalBackground.classList.add("modal-show");
-  modalContent.classList.add("modal-show");
 }
 
 function removeModal() {
   const modalOverlay = document.getElementById('modal-overlay');
-  const modalContent = document.getElementById('modal-content');
   const modalBackground = document.getElementById('modal-background');
   modalOverlay.classList.remove("modal-show");
   modalBackground.classList.remove("modal-show");
-  modalContent.classList.remove("modal-show");
 }
 
 function addResetGameEvents() {

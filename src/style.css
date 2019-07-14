@@ -87,7 +87,8 @@
 }
 
 .modal-overlay {
-  visibility: hidden;
+  display: none;
+  /* visibility: hidden; */
   position: fixed;
   z-index: 200;
   top: 50%;
@@ -99,8 +100,11 @@
   font-family: 'Lato', Calibri, Arial, sans-serif;
 }
 
-.modal-show.modal-overlay {
+/* .modal-show.modal-overlay {
   visibility: visible;
+} */
+.modal-show.modal-overlay {
+  display: block;
 }
 
 .modal-content {
@@ -109,14 +113,28 @@
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
-  transform: scale(0.7);
+  /* transform: scale(0.7);
   opacity: 0;
-  transition: all .3s linear;
+  transition: all .3s linear; */
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
-.modal-show.modal-overlay .modal-content {
+/* .modal-show.modal-overlay .modal-content {
   transform: scale(1);
 	opacity: 1;
+} */
+.modal-show.modal-overlay .modal-content {
+  animation: scaling .4s linear;
+}
+
+@keyframes scaling {
+  from { 
+    transform: scale(0.7);
+    opacity: 0;
+  }
+  to { 
+    transform: scale(1);
+	  opacity: 1; 
+  }
 }
 
 .modal-content > div, button {
