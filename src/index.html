@@ -3,26 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <link href="style.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
     <title>Tic Tac Toe</title>
   </head>
 
   <body>
     <div id="app">
-      <div class="modal-background u--hide" id="modal-background"></div>
-      <div id="modal-anchor" class="u--hide">
-        <div class="modal-overlay">
-          <div class="modal-content">
+      <div class="modal-background" id="modal-background"></div>
+      <div id="modal-anchor">
+        <div class="modal-overlay" id="modal-overlay">
+          <div class="modal-content" id="modal-content">
             <div class="modal-title">
-              ! 
+              Attention
             </div>
             <div class="modal-message">
-              <span>Place Holder</span>
+              <span id="end-game-message">We had a tie!</span>
             </div>
-            <div class="modal-bottom">
-              <button class="button reset-button">
+            <button class="modal-bottom button" id="reset-button">
                 Reset Game
-              </button>
-            </div>
+            </button>
           </div>
         </div>
 

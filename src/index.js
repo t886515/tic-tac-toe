@@ -99,12 +99,12 @@ function onClickBlock(e) {
     if (turnCount > 4) {
       const won = determineResult(currentSymbol, blockId);
       if (won) {
-        renderModal(currentSymbol + ' player won the game!');
+        handleEndGame(currentSymbol + ' player won the game!');
         return;
       }
     }
     if (turnCount === 9) {
-      renderModal('Tie!');
+      handleEndGame('We have a tie!');
     }
   } else {
     console.log('Already selected!');
@@ -113,56 +113,39 @@ function onClickBlock(e) {
 
 /** ======================== */
 /** END GAME: Modal handling */
-
-function renderModal(message) {
-  // grab modal-message div and add the message
-  // const modalAnchor = document.getElementById('modal-anchor');
-  const modalBackground = document.getElementById('modal-background');
-  // modalAnchor.className = "";
-  modalBackground.classList.remove("u--hide");
+function handleEndGame(message) {
+  updateModalMessage(message);
+  addResetGameEvents();
+  renderModal();
 }
 
-// function renderModal(currentSymbol) {
-//   const anchorModalElement = document.getElementById('modal-anchor');
-//   const modalContentElement = createModalContentWrapperElement(currentSymbol);
-//   const modalBackgroundElement = createModelBackgroundElement(
-//     modalContentElement
-//   );
-//   anchorModalElement.append(modalBackgroundElement);
-// }
+function updateModalMessage(message) {
+  const modalMessage = document.getElementById('end-game-message');
+  modalMessage.innerHTML = message;
+}
 
-// function removeModal() {
-//   const modalBackgroundElement = document.getElementById('modal');
-//   modalBackgroundElement.remove();
-// }
+function renderModal() {
+  const modalOverlay = document.getElementById('modal-overlay');
+  const modalContent = document.getElementById('modal-content');
+  const modalBackground = document.getElementById('modal-background');
+  modalOverlay.classList.add("modal-show");
+  modalBackground.classList.add("modal-show");
+  modalContent.classList.add("modal-show");
+}
 
-// function createModelBackgroundElement(modalContentElement) {
-//   const modalElement = document.createElement('div');
-//   modalElement.className = 'modal-background';
-//   modalElement.id = 'modal';
-//   modalElement.append(modalContentElement);
-//   return modalElement;
-// }
+function removeModal() {
+  const modalOverlay = document.getElementById('modal-overlay');
+  const modalContent = document.getElementById('modal-content');
+  const modalBackground = document.getElementById('modal-background');
+  modalOverlay.classList.remove("modal-show");
+  modalBackground.classList.remove("modal-show");
+  modalContent.classList.remove("modal-show");
+}
 
-// function createModalContentWrapperElement(displayMessage) {
-//   const modalOverlay = document.createElement('div');
-//   modalOverlay.className = 'modal-overlay';
-//   const modalContent = document.createElement('div');
-
-//   // modalOverlay.innerHTML = displayMessage;
-//   const resetButton = createResetButton();
-//   modalOverlay.appendChild(resetButton);
-//   return modalOverlay;
-// }
-
-// function createResetButton() {
-//   const resetButton = document.createElement('button');
-//   resetButton.innerHTML = "Reset Board";
-//   resetButton.className = "button reset-button";
-//   // resetButton.removeEventListener('click');
-//   resetButton.addEventListener('click', resetGame);
-//   return resetButton;
-// }
+function addResetGameEvents() {
+  const resetButton = document.getElementById('reset-button')
+  resetButton.addEventListener('click', resetGame);
+}
 
 /** END GAME: Modal handling */
 /** ======================== */
