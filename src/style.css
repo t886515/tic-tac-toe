@@ -1,32 +1,86 @@
-#board-anchor {
-  display: flex;
-  height: 100vh;
-  justify-content: center;
-  align-items: center;
+/* flushing existing body style */
+body {
+  margin: 0;
+  padding: 0;
+}
+/* important globals */
+.flex--col {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+.flex--row {
+  display: flex !important;
+  flex-direction: row !important;
 }
 
 .u--hide {
   display: none !important;
 }
+/* important globals */
+#app {
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+  /* background: #e3f2fd; */
+}
 
+#board-anchor {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+}
+
+#app.modal-show #board-anchor {
+  filter: blur(3px);
+}
+
+/* everything about current player title - start */
+
+.current-player__wrapper {
+  justify-content: center;
+  align-items: center;
+  margin: 0 0 40px 0;
+  width: 100%;
+  height: 20%;
+  font-size: 50px;
+  background: #e3f2fd;
+  text-transform: uppercase;
+}
+
+/* everything about current player title - end */
+
+/* everything about board - start */
 .board {
   width: 600;
   height: 600;
   display: flex;
   flex-direction: column;
+  border: 1px solid #0d47a1;
+  border-radius: 2px;
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 .row {
   display: flex;
 }
+
 .col {
-  border: 1px solid black;
+  border: 1px solid #0d47a1;
   width: 200px;
   height: 200px;
   font-family: 'Helvetica';
 }
 
-/* flipping card animation */
+.O {
+  font-size: 100px;
+  color: green;
+}
+
+.X {
+  font-size: 100px;
+  color: red;
+}
+
+/* flipping card animation - start */
 
 .flip-card-wrapper {
   position: relative;
@@ -48,7 +102,7 @@
 }
 
 .flip-card-front {
-  background-color: lightgrey;
+  background-color: #e3f2fd;
 }
 
 .flip-card-back {
@@ -58,18 +112,22 @@
   transform: rotateY(180deg);
 }
 
-.O {
-  font-size: 100px;
-  color: green;
+/* flipping card animation - end */
+
+/* everything about board - end */
+
+/* everything about record - start */
+
+.record {
+  min-width: 40%;
+  margin: 0px 0px 0px 30px;
+  background: #e3f2fd;
 }
 
-.X {
-  font-size: 100px;
-  color: red;
-}
+/* everything about record - end */
 
+/* everything about modal -start */
 .modal-background {
-  /* display: block; */
   display: none;
   position: fixed;
   width: 100%;
@@ -82,7 +140,7 @@
   transition: all 0.3s;
 }
 
-.modal-show.modal-background {
+#app.modal-show .modal-background {
   display: block;
 }
 
@@ -97,18 +155,17 @@
   height: 300px;
   transform: translateX(-50%) translateY(-50%);
   border-radius: 5px;
-  font-family: 'Lato', Calibri, Arial, sans-serif;
 }
 
 /* .modal-show.modal-overlay {
   visibility: visible;
 } */
-.modal-show.modal-overlay {
+#app.modal-show .modal-overlay {
   display: block;
 }
 
 .modal-content {
-  background-color: #e74c3c;
+  background-color: #42a5f5;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -122,17 +179,19 @@
   transform: scale(1);
 	opacity: 1;
 } */
-.modal-show.modal-overlay .modal-content {
-  animation: scaling .4s linear;
+#app.modal-show .modal-content {
+  animation: scaling .3s linear;
 }
 
 @keyframes scaling {
   from { 
     transform: scale(0.7);
+    /* transform: rotateY(-70deg); */
     opacity: 0;
   }
   to { 
     transform: scale(1);
+    /* transform: rotateY(0deg); */
 	  opacity: 1; 
   }
 }
@@ -161,20 +220,23 @@
 .modal-bottom {
   display: flex;
   justify-content: center;
-  background: #c0392b;
+  background: #bbdefb;
   font-size: 1.4em;
   text-transform: uppercase;
-  font-family: 'Lato', Calibri, Arial, sans-serif;
   letter-spacing: 1px;
   border: 0px;
   cursor: pointer;
   color: #333333;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
 }
 
 .modal-bottom:hover {
-  background: rgba(212, 181, 181, 0.1);
+  background: #1976d2;
+  color: white;
 }
 
 .modal-bottom:focus {
   border: 0px;
 }
+
+/* everything about modal - end */

@@ -43,15 +43,15 @@ function bindEventListeners() {
 
 function rebuildBoard() {
   const newBoard = buildBoard();
-  const boardAnchor = document.getElementById('board-anchor');
+  const boardAnchor = document.getElementById('board-score');
   const oldBoard = document.getElementById('board');
-  oldBoard.remove();
-  boardAnchor.appendChild(newBoard);
+  boardAnchor.replaceChild(newBoard, oldBoard);
 }
 
 function buildBoard() {
   const board = document.createElement('div');
   board.id = 'board';
+  board.className = 'board';
   for (let i = 0; i < 3; i++) {
     let row = document.createElement('div');
     row.className = `row row-${i}`;
@@ -125,17 +125,13 @@ function updateModalMessage(message) {
 }
 
 function renderModal() {
-  const modalOverlay = document.getElementById('modal-overlay');
-  const modalBackground = document.getElementById('modal-background');
-  modalOverlay.classList.add("modal-show");
-  modalBackground.classList.add("modal-show");
+  const app = document.getElementById('app');
+  app.classList.add("modal-show");
 }
 
 function removeModal() {
-  const modalOverlay = document.getElementById('modal-overlay');
-  const modalBackground = document.getElementById('modal-background');
-  modalOverlay.classList.remove("modal-show");
-  modalBackground.classList.remove("modal-show");
+  const app = document.getElementById('app');
+  app.classList.remove("modal-show");
 }
 
 function addResetGameEvents() {

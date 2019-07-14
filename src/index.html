@@ -26,76 +26,83 @@
         </div>
 
       </div>
-      <div id="board-anchor">
-        <div id="board" class="board">
-          <div class="row row-0">
-            <div class="col col-0" id="0,0">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
+      <div id="board-anchor" class="flex--col">
+        <div class="current-player__wrapper flex--row">
+          <span class="current-player__static">Current Player:</span>
+          <span id="current-player" class="current-player__symbol"> O </span>
+        </div>
+        <div id="board-score" class="flex--row">
+          <div id="board" class="board">
+            <div class="row row-0">
+              <div class="col col-0" id="0,0">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
+              </div>
+              <div class="col col-1" id="0,1">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
+              </div>
+              <div class="col col-2" id="0,2">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
               </div>
             </div>
-            <div class="col col-1" id="0,1">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
+            <div class="row row-1">
+              <div class="col col-0" id="1,0">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
+              </div>
+              <div class="col col-1" id="1,1">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
+              </div>
+              <div class="col col-2" id="1,2">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
               </div>
             </div>
-            <div class="col col-2" id="0,2">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
+            <div class="row row-2">
+              <div class="col col-0" id="2,0">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
+              </div>
+              <div class="col col-1" id="2,1">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
+              </div>
+              <div class="col col-2" id="2,2">
+                <div class="flip-card-wrapper">
+                  <div class="flip-card-front"></div>
+                  <div class="flip-card-back"></div>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row row-1">
-            <div class="col col-0" id="1,0">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
-              </div>
-            </div>
-            <div class="col col-1" id="1,1">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
-              </div>
-            </div>
-            <div class="col col-2" id="1,2">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
-              </div>
-            </div>
-          </div>
-          <div class="row row-2">
-            <div class="col col-0" id="2,0">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
-              </div>
-            </div>
-            <div class="col col-1" id="2,1">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
-              </div>
-            </div>
-            <div class="col col-2" id="2,2">
-              <div class="flip-card-wrapper">
-                <div class="flip-card-front"></div>
-                <div class="flip-card-back"></div>
-              </div>
+          <div id="record" class="record">
+            <div>
+
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- board partial -->
-    <!-- <template id="board-partial"> </template> -->
-
-    <!-- modal partial -->
     <template id="modal-partial"> </template>
     <script src="index.js"></script>
   </body>
