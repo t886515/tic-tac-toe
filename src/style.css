@@ -40,10 +40,17 @@ body {
   align-items: center;
   margin: 0 0 40px 0;
   width: 100%;
-  height: 20%;
+  height: 15%;
   font-size: 50px;
   background: #e3f2fd;
   text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#current-player {
+  margin: 0 30px;
+  font-size: 60px;
+  width: 70px;
 }
 
 /* everything about current player title - end */
@@ -70,13 +77,15 @@ body {
   font-family: 'Helvetica';
 }
 
-.O {
+.board-symbol {
   font-size: 100px;
+}
+
+.O {
   color: green;
 }
 
 .X {
-  font-size: 100px;
   color: red;
 }
 

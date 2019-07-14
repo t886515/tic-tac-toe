@@ -16,6 +16,7 @@ function resetGame() {
   turnCount = 0;
   cacheCoordinate = [];
   rebuildBoard();
+  resetCurrentPlayer();
   removeModal();
   bindEventListeners();
 }
@@ -66,6 +67,13 @@ function buildBoard() {
     board.appendChild(row);
   };
   return board;
+}
+
+function resetCurrentPlayer() {
+  const currentPlayer = document.getElementById('current-player');
+  currentPlayer.innerHTML = 'O';
+  currentPlayer.classList.remove('X');
+  currentPlayer.classList.add('O');
 }
 
 function createFlippingCards() {
@@ -148,12 +156,14 @@ function updateDOM(currentSymbol, blockId) {
   const block = document.getElementById(blockId);
   appendSymbolToCard(block, currentSymbol);
   updateInnerCardStatus(block);
+  updateCurrentPlayer();
 }
 
 function createSymbolElement(currentSymbol) {
   const symbolElement = document.createElement('div');
   symbolElement.innerHTML = currentSymbol;
   symbolElement.className = currentSymbol;
+  symbolElement.classList.add("board-symbol");
   return symbolElement;
 }
 function updateInnerCardStatus(block) {
@@ -164,6 +174,13 @@ function appendSymbolToCard(block, currentSymbol) {
   const symbolElement = createSymbolElement(currentSymbol);
   const cardBack = block.querySelector(".flip-card-back");
   cardBack.appendChild(symbolElement);
+}
+
+function updateCurrentPlayer() {
+  const currentPlayer = document.getElementById('current-player');
+  currentPlayer.innerHTML = turnCount % 2 === 1 ? 'X' : 'O';
+  currentPlayer.classList.toggle('O');
+  currentPlayer.classList.toggle('X');
 }
 
 
@@ -179,8 +196,6 @@ function updateGameRecord(currentSymbol, blockId) {
   const y = splitId[1];
   gameRecord[currentSymbol].row[x].push(blockId);
   gameRecord[currentSymbol].col[y].push(blockId);
-
-  console.log(gameRecord);
 }
 function evaluateSymbol() {
   turnCount++;
